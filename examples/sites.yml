@@ -1,0 +1,20 @@
+defaults:
+  timeout: 10s
+  asset_timeout: 5s
+  concurrency: 10
+  asset_concurrency: 6
+  max_assets: 100
+  cert_warning_days: 14
+  max_html_bytes: 10485760
+  user_agent: "DorsetDigital-Sitechecker/dev"
+
+sites:
+  - https://www.example.com
+
+  - url: https://www.example.org
+    # Extra hosts can be explicitly considered first-party when needed.
+    first_party_hosts:
+      - static.example.net
+    # Optional glob/substring matches for assets that should not affect the result.
+    ignore_assets:
+      - "/optional/*"

@@ -11,13 +11,20 @@ import (
 	"net/url"
 	"strings"
 	"sync"
+	"sync/atomic"
 	"time"
 
 	"github.com/DorsetDigital/sitechecker/internal/config"
 	"golang.org/x/net/html"
 )
 
+type ProgressFunc func(completed, total int, result Result)
+
 func CheckAll(cfg config.Config) []Result {
+	return CheckAllWithProgress(cfg, nil)
+}
+
+func CheckAllWithProgress(cfg config.Config, progress ProgressFunc) []Result {
 	results := make([]Result, len(cfg.Sites))
 	workers := cfg.Defaults.Concurrency
 	if workers > len(cfg.Sites) {
@@ -28,13 +35,21 @@ func CheckAll(cfg config.Config) []Result {
 	}
 
 	jobs := make(chan int)
-	var wg sync.WaitGroup
+	var (
+		wg        sync.WaitGroup
+		completed atomic.Int64
+	)
 	for i := 0; i < workers; i++ {
 		wg.Add(1)
 		go func() {
 			defer wg.Done()
 			for idx := range jobs {
-				results[idx] = CheckSite(cfg.Sites[idx], cfg.Defaults)
+				result := CheckSite(cfg.Sites[idx], cfg.Defaults)
+				results[idx] = result
+				if progress != nil {
+					done := int(completed.Add(1))
+					progress(done, len(cfg.Sites), result)
+				}
 			}
 		}()
 	}

@@ -26,14 +26,14 @@ func (d Duration) MarshalYAML() (interface{}, error) {
 }
 
 type Defaults struct {
-	Timeout             Duration `yaml:"timeout"`
-	AssetTimeout        Duration `yaml:"asset_timeout"`
-	Concurrency         int      `yaml:"concurrency"`
-	AssetConcurrency    int      `yaml:"asset_concurrency"`
-	MaxAssets           int      `yaml:"max_assets"`
-	CertWarningDays     int      `yaml:"cert_warning_days"`
-	MaxHTMLBytes        int64    `yaml:"max_html_bytes"`
-	UserAgent           string   `yaml:"user_agent"`
+	Timeout          Duration `yaml:"timeout"`
+	AssetTimeout     Duration `yaml:"asset_timeout"`
+	Concurrency      int      `yaml:"concurrency"`
+	AssetConcurrency int      `yaml:"asset_concurrency"`
+	MaxAssets        int      `yaml:"max_assets"`
+	CertWarningDays  int      `yaml:"cert_warning_days"`
+	MaxHTMLBytes     int64    `yaml:"max_html_bytes"`
+	UserAgent        string   `yaml:"user_agent"`
 }
 
 type Site struct {

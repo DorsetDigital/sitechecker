@@ -11,12 +11,12 @@ type Timing struct {
 }
 
 type TLSResult struct {
-	Valid       bool      `json:"valid"`
-	ServerName  string    `json:"server_name,omitempty"`
-	Issuer      string    `json:"issuer,omitempty"`
-	NotAfter    time.Time `json:"not_after,omitempty"`
-	DaysLeft    int       `json:"days_left,omitempty"`
-	Warning     string    `json:"warning,omitempty"`
+	Valid      bool      `json:"valid"`
+	ServerName string    `json:"server_name,omitempty"`
+	Issuer     string    `json:"issuer,omitempty"`
+	NotAfter   time.Time `json:"not_after,omitempty"`
+	DaysLeft   int       `json:"days_left,omitempty"`
+	Warning    string    `json:"warning,omitempty"`
 }
 
 type AssetResult struct {
@@ -29,18 +29,18 @@ type AssetResult struct {
 }
 
 type Result struct {
-	URL              string        `json:"url"`
-	FinalURL         string        `json:"final_url,omitempty"`
-	StatusCode       int           `json:"status_code,omitempty"`
-	OK               bool          `json:"ok"`
-	ContentType      string        `json:"content_type,omitempty"`
-	Redirects        []string      `json:"redirects,omitempty"`
-	TLS              *TLSResult    `json:"tls,omitempty"`
-	Timing           Timing        `json:"timing"`
-	AssetsChecked    int           `json:"assets_checked"`
-	AssetsPassed     int           `json:"assets_passed"`
-	AssetsTruncated  bool          `json:"assets_truncated,omitempty"`
-	AssetFailures    []AssetResult `json:"asset_failures,omitempty"`
-	Error            string        `json:"error,omitempty"`
-	Warnings         []string      `json:"warnings,omitempty"`
+	URL             string        `json:"url"`
+	FinalURL        string        `json:"final_url,omitempty"`
+	StatusCode      int           `json:"status_code,omitempty"`
+	OK              bool          `json:"ok"`
+	ContentType     string        `json:"content_type,omitempty"`
+	Redirects       []string      `json:"redirects,omitempty"`
+	TLS             *TLSResult    `json:"tls,omitempty"`
+	Timing          Timing        `json:"timing"`
+	AssetsChecked   int           `json:"assets_checked"`
+	AssetsPassed    int           `json:"assets_passed"`
+	AssetsTruncated bool          `json:"assets_truncated,omitempty"`
+	AssetFailures   []AssetResult `json:"asset_failures,omitempty"`
+	Error           string        `json:"error,omitempty"`
+	Warnings        []string      `json:"warnings,omitempty"`
 }

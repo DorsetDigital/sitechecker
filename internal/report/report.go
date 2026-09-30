@@ -36,6 +36,23 @@ func Summarise(results []checker.Result, started time.Time) Summary {
 	return s
 }
 
+func PrintProgress(w io.Writer, completed, total int, r checker.Result) {
+	status := "OK"
+	if !r.OK {
+		status = "FAIL"
+	}
+	httpState := "-"
+	if r.StatusCode > 0 {
+		httpState = fmt.Sprintf("%d", r.StatusCode)
+	}
+	assets := fmt.Sprintf("%d/%d assets", r.AssetsPassed, r.AssetsChecked)
+	if len(r.AssetFailures) > 0 {
+		assets += " FAIL"
+	}
+	fmt.Fprintf(w, "[%d/%d] %-4s %-36s HTTP %-3s  %-16s %s\n",
+		completed, total, status, displaySite(r), httpState, assets, roundDuration(r.Timing.Total))
+}
+
 func Print(w io.Writer, results []checker.Result, summary Summary) {
 	tw := tabwriter.NewWriter(w, 0, 4, 2, ' ', 0)
 	fmt.Fprintln(tw, "SITE\tTLS\tHTTP\tASSETS\tTIME")

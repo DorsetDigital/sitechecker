@@ -36,8 +36,9 @@ func CheckAllWithProgress(cfg config.Config, progress ProgressFunc) []Result {
 
 	jobs := make(chan int)
 	var (
-		wg        sync.WaitGroup
-		completed atomic.Int64
+		wg         sync.WaitGroup
+		completed  atomic.Int64
+		progressMu sync.Mutex
 	)
 	for i := 0; i < workers; i++ {
 		wg.Add(1)
@@ -48,7 +49,9 @@ func CheckAllWithProgress(cfg config.Config, progress ProgressFunc) []Result {
 				results[idx] = result
 				if progress != nil {
 					done := int(completed.Add(1))
+					progressMu.Lock()
 					progress(done, len(cfg.Sites), result)
+					progressMu.Unlock()
 				}
 			}
 		}()

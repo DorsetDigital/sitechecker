@@ -115,9 +115,14 @@ Command-line `-concurrency` takes precedence over configuration and environment 
 
 ## Output
 
-Normal output is deliberately compact:
+Normal terminal mode reports each site as soon as it completes so long runs visibly make progress:
 
 ```text
+Checking 2 site(s)...
+
+[1/2] OK   www.example.com                      HTTP 200  4/4 assets       241ms
+[2/2] FAIL www.example.org                      HTTP 200  6/7 assets FAIL  318ms
+
 SITE             TLS  HTTP  ASSETS    TIME
 www.example.com  OK   200   4/4 OK    241ms
 www.example.org  OK   200   6/7 FAIL  318ms
@@ -134,7 +139,7 @@ Detailed machine-readable output can be written with:
 sitechecker -config sites.yml -json report.json
 ```
 
-Use `-json -` to output only JSON to stdout.
+Use `-json -` to output only JSON to stdout. Live progress output is suppressed in this mode so stdout remains valid machine-readable JSON.
 
 ## Exit codes
 

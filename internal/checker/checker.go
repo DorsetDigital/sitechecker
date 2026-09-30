@@ -60,8 +60,8 @@ func CheckSite(site config.Site, defaults config.Defaults) Result {
 
 	var (
 		dnsStart, connectStart, tlsStart time.Time
-		firstByte                    time.Time
-		redirects                    []string
+		firstByte                        time.Time
+		redirects                        []string
 	)
 
 	trace := &httptrace.ClientTrace{

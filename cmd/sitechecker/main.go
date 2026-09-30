@@ -64,7 +64,16 @@ func run() int {
 	}
 
 	started := time.Now()
-	results := checker.CheckAll(cfg)
+
+	var progress checker.ProgressFunc
+	if jsonPath != "-" {
+		fmt.Fprintf(os.Stdout, "Checking %d site(s)...\n\n", len(cfg.Sites))
+		progress = func(completed, total int, result checker.Result) {
+			report.PrintProgress(os.Stdout, completed, total, result)
+		}
+	}
+
+	results := checker.CheckAllWithProgress(cfg, progress)
 	summary := report.Summarise(results, started)
 
 	if jsonPath != "-" {
